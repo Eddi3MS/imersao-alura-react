@@ -53,6 +53,11 @@ const HomeSty = styled.main`
       button {
         background-color: var(--primary-500);
         border: 0;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--primary-600);
+        }
       }
     }
 
@@ -96,7 +101,9 @@ function Home() {
                 placeholder="Seu usuário do github"
                 onChange={(e) => setUser(e.target.value)}
               />
-              <button type="submit">Entrar</button>
+              <button onClick={(e) => e.preventDefault()} type="submit">
+                Entrar
+              </button>
             </form>
           </div>
           <div className="container__image">

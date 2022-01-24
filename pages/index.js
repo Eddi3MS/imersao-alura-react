@@ -6,6 +6,7 @@ const HomeSty = styled.main`
   display: flex;
   align-items: center;
   justify-content: center;
+  backdrop-filter: blur(2px);
 
   .container {
     width: min(90%, 700px);

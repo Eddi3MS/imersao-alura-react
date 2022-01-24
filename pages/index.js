@@ -88,6 +88,12 @@ const HomeSty = styled.main`
 
 function Home() {
   const [user, setUser] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("o mizeravi é um gênio!");
+  };
+
   return (
     <>
       <GlobalStyles />
@@ -102,7 +108,7 @@ function Home() {
                 placeholder="Seu usuário do github"
                 onChange={(e) => setUser(e.target.value)}
               />
-              <button onClick={(e) => e.preventDefault()} type="submit">
+              <button onClick={handleSubmit} type="submit">
                 Entrar
               </button>
             </form>

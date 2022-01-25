@@ -55,6 +55,7 @@ const ChatSty = styled.main`
         span:nth-of-type(2) {
           font-size: 10px;
           align-self: center;
+          color: var(--neutrals-300);
         }
       }
     }

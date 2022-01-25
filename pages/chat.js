@@ -1,7 +1,8 @@
+import toast from "react-hot-toast";
 import Link from "next/link";
 import React from "react";
 import styled from "styled-components";
-import userPic from "../public/user.png";
+import { BiMicrophone } from "react-icons/bi";
 
 const ChatSty = styled.main`
   display: flex;
@@ -92,11 +93,23 @@ const ChatSty = styled.main`
       height: 50px;
       border-radius: 50%;
       border: 0;
+      cursor: pointer;
+
+      svg {
+        font-size: 2rem;
+        color: var(--primary-500);
+      }
     }
   }
 `;
 
 function Chat() {
+  const handleJoke = (e) => {
+    e.preventDefault();
+
+    toast.success(`MuhuHAHhaHAHA 
+    Não funciona!!!`);
+  };
   return (
     <ChatSty>
       <header>
@@ -131,7 +144,9 @@ function Chat() {
 
       <form>
         <input placeholder="Insira sua mensagem aqui.." type="text" />{" "}
-        <button>:</button>
+        <button onClick={handleJoke}>
+          <BiMicrophone />
+        </button>
       </form>
     </ChatSty>
   );

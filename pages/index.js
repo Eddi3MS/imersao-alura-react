@@ -125,6 +125,11 @@ function Home() {
       return;
     }
 
+    if (user.length < 1) {
+      toast.error("Usuário inválido.");
+      return;
+    }
+
     router.push("/chat");
   };
 

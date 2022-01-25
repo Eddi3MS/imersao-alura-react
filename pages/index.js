@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import GlobalStyles from "../styles/GlobalStyles";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 
 const HomeSty = styled.main`
   display: flex;
@@ -88,36 +89,68 @@ const HomeSty = styled.main`
 
 function Home() {
   const [user, setUser] = useState("");
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user === "") return;
+
+    const url = `https://api.github.com/users/${user}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.message) {
+          setError(data.message);
+        } else {
+          setError("");
+          setData(data);
+        }
+      });
+  }, [user]);
+
+  const setData = ({ name, avatar_url }) => {
+    setName(name);
+    setAvatar(avatar_url);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("o mizeravi é um gênio!");
+
+    if (error) {
+      toast.error("Usuário inválido.");
+      return;
+    }
+
+    router.push("/chat");
   };
 
   return (
     <>
-      <GlobalStyles />
       <HomeSty>
         <div className="container">
           <div className="container__form">
             <h1>Bem-vindo de volta!</h1>
             <h2>Aluracord - Alura Matrix</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 placeholder="Seu usuário do github"
                 onChange={(e) => setUser(e.target.value)}
               />
-              <button onClick={handleSubmit} type="submit">
-                Entrar
-              </button>
+              <button type="submit">Entrar</button>
             </form>
           </div>
           <div className="container__image">
-            {user && (
+            {error && <span>{error}</span>}
+
+            {name && (
               <>
-                <img src={`https://github.com/${user}.png`} alt="github user" />
-                <span>{user}</span>
+                <img src={avatar} alt="github user" />
+                <span>{name}</span>
               </>
             )}
           </div>

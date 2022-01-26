@@ -15,3 +15,15 @@ Construção da tela de entrada.
 - Dummy Data no chat D:
 
 ![imersao-alura-02](https://user-images.githubusercontent.com/75024157/151029198-abf15301-1af2-4f6f-b1dd-98b2b1e4bc75.PNG)
+
+## Day 03 Concluído!!
+
+- Armazenamento da mensagem inserida no input
+
+- Armazenamento de todas as mensagens em um array
+
+- Mapeamento do array e exibição das mensagens em tela.
+
+- Delete button que filtra e exclui a mensagem do array.
+
+![imersao-alura-03](https://user-images.githubusercontent.com/75024157/151178747-6813b883-2ca3-40db-a30e-d477889d5e51.PNG)

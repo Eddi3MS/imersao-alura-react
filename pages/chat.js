@@ -226,7 +226,7 @@ function Chat() {
                   <button
                     aria-label="delete message"
                     className="btn__trash"
-                    ondivck={(e) => handleDeleteMessage(e, message.id)}
+                    onClick={(e) => handleDeleteMessage(e, message.id)}
                   >
                     <BiTrash />
                   </button>

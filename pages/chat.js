@@ -202,7 +202,7 @@ function Chat() {
         <h1>Chat</h1>
         <Link href="/">Logout</Link>
       </header>
-      <ul className="chat__container">
+      <div className="chat__container">
         <div
           style={{
             display: "flex",
@@ -213,31 +213,34 @@ function Chat() {
         >
           {messageList.map((message) => {
             return (
-              <li className="chat__container-singlePost" key={message.id}>
+              <div className="chat__container-singlePost" key={message.id}>
                 <div>
                   <img
+                    width="20"
+                    height="20"
                     src={`https://github.com/${message.user}.png`}
                     alt="user"
                   />
                   <span>{message.user}</span>
                   <span>{message.date}</span>
                   <button
+                    aria-label="delete message"
                     className="btn__trash"
-                    onClick={(e) => handleDeleteMessage(e, message.id)}
+                    ondivck={(e) => handleDeleteMessage(e, message.id)}
                   >
                     <BiTrash />
                   </button>
                 </div>
                 <p>{message.message}</p>
-              </li>
+              </div>
             );
           })}
         </div>
         <div ref={messagesEndRef} />
-      </ul>
+      </div>
 
       <form onSubmit={handleTextSubmit}>
-        <button className="btn__emotes">
+        <button aria-label="emoticons" className="btn__emotes">
           <BiMicrophone />
         </button>
         <input
@@ -246,7 +249,7 @@ function Chat() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button className="btn__submit" type="submit">
+        <button className="btn__submit" type="submit" aria-label="submit text">
           Enviar
         </button>
       </form>

@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import "@fontsource/roboto";
 
 const GlobalStyles = createGlobalStyle`
 /* Box sizing rules ** Remove default margin */
@@ -77,7 +78,7 @@ picture {
     background-image: url('/bg.png');
     background-repeat: no-repeat;
     background-size: cover;
-    font-family: Open-Sans, Helvetica, Sans-Serif;
+    font-family: 'Roboto', Helvetica, Sans-Serif;
   }
 `;
 

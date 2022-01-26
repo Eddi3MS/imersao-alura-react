@@ -134,34 +134,32 @@ function Home() {
   };
 
   return (
-    <>
-      <HomeSty>
-        <div className="container">
-          <div className="container__form">
-            <h1>Bem-vindo de volta!</h1>
-            <h2>Aluracord - Alura Matrix</h2>
-            <form onSubmit={handleSubmit}>
-              <input
-                type="text"
-                placeholder="Seu usuário do github"
-                onChange={(e) => setUser(e.target.value)}
-              />
-              <button type="submit">Entrar</button>
-            </form>
-          </div>
-          <div className="container__image">
-            {error && <span>{error}</span>}
-
-            {name && (
-              <>
-                <img src={avatar} alt="github user" />
-                <span>{name}</span>
-              </>
-            )}
-          </div>
+    <HomeSty>
+      <div className="container">
+        <div className="container__form">
+          <h1>Bem-vindo de volta!</h1>
+          <h2>Aluracord - Alura Matrix</h2>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Seu usuário do github"
+              onChange={(e) => setUser(e.target.value)}
+            />
+            <button type="submit">Entrar</button>
+          </form>
         </div>
-      </HomeSty>
-    </>
+        <div className="container__image">
+          {error && <span>{error}</span>}
+
+          {name && (
+            <>
+              <img width="200" height="200" src={avatar} alt="github user" />
+              <span>{name}</span>
+            </>
+          )}
+        </div>
+      </div>
+    </HomeSty>
   );
 }
 

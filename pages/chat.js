@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { BiMicrophone, BiTrash } from "react-icons/bi";
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
-import Modal from "../components/Modal";
 
 const ChatSty = styled.main`
   display: flex;

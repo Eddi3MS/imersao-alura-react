@@ -3,6 +3,9 @@ import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { BiMicrophone, BiTrash } from "react-icons/bi";
+import { createClient } from "@supabase/supabase-js";
+import { useRouter } from "next/router";
+import Modal from "../components/Modal";
 
 const ChatSty = styled.main`
   display: flex;
@@ -147,45 +150,67 @@ const ChatSty = styled.main`
   }
 `;
 
-function Chat() {
+function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
   const [message, setMessage] = useState("");
-  const [messageList, setMessageList] = useState([
-    {
-      id: 0,
-      message: "AVISO: O usuário ainda não está dinâmico.",
-      user: "eddi3ms",
-      date: new Date().toLocaleString(),
-    },
-  ]);
+  const [messageList, setMessageList] = useState([]);
+  const router = useRouter();
   const messagesEndRef = useRef(null);
 
-  const handleTextSubmit = (e) => {
+  const [update, setUpdate] = useState(true);
+
+  const supabase_client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  });
+
+  useEffect(() => {
+    if (!update) return;
+
+    supabase_client
+      .from("messages")
+      .select("*")
+      .then(({ data }) => {
+        setMessageList(data);
+        setUpdate(false);
+      });
+  }, [update]);
+
+  const handleTextSubmit = async (e) => {
     e.preventDefault();
 
     if (!message) {
-      toast.error("Campo de mensagem vazio.");
+      toast.error("Insira uma mensagem.");
       return;
     }
 
     const messageEdit = {
-      id: messageList.length + 1,
       message,
-      user: "eddi3ms",
-      date: new Date().toLocaleString(),
+      from: user,
     };
 
-    const list = [...messageList, messageEdit];
+    supabase_client
+      .from("messages")
+      .insert([messageEdit])
+      .then(({ data }) => {
+        setMessageList([...messageList, data[0]]);
+      });
 
-    setMessageList(list);
+    setUpdate(true);
     setMessage("");
   };
 
-  const handleDeleteMessage = (e, messageId) => {
+  const handleDeleteMessage = async (e, messageId) => {
     e.preventDefault();
-    const deletedList = messageList.filter(
-      (message) => message.id !== messageId
-    );
-    setMessageList(deletedList);
+
+    const { data, error } = await supabase_client
+      .from("messages")
+      .delete()
+      .match({ id: messageId });
+
+    setUpdate(true);
   };
 
   const scrollToBottom = () => {
@@ -202,6 +227,7 @@ function Chat() {
         <h1>Chat</h1>
         <Link href="/">Logout</Link>
       </header>
+
       <div className="chat__container">
         <div
           style={{
@@ -218,24 +244,29 @@ function Chat() {
                   <img
                     width="20"
                     height="20"
-                    src={`https://github.com/${message.user}.png`}
+                    src={`https://github.com/${message.from}.png`}
                     alt="user"
+                    onClick={() => {}}
                   />
-                  <span>{message.user}</span>
+
+                  <span>{message.from}</span>
                   <span>{message.date}</span>
-                  <button
-                    aria-label="delete message"
-                    className="btn__trash"
-                    onClick={(e) => handleDeleteMessage(e, message.id)}
-                  >
-                    <BiTrash />
-                  </button>
+                  {message.from === user ? (
+                    <button
+                      aria-label="delete message"
+                      className="btn__trash"
+                      onClick={(e) => handleDeleteMessage(e, message.id)}
+                    >
+                      <BiTrash />
+                    </button>
+                  ) : null}
                 </div>
                 <p>{message.message}</p>
               </div>
             );
           })}
         </div>
+
         <div ref={messagesEndRef} />
       </div>
 
@@ -255,6 +286,16 @@ function Chat() {
       </form>
     </ChatSty>
   );
+}
+
+export async function getServerSideProps() {
+  const { SUPABASE_ANON_KEY, SUPABASE_URL } = process.env;
+  return {
+    props: {
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY,
+    },
+  };
 }
 
 export default Chat;

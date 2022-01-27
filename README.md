@@ -27,3 +27,19 @@ Construção da tela de entrada.
 - Delete button que filtra e exclui a mensagem do array.
 
 ![imersao-alura-03](https://user-images.githubusercontent.com/75024157/151178747-6813b883-2ca3-40db-a30e-d477889d5e51.PNG)
+
+## Day 04 Concluído!!
+
+- Implementação do Supabase para persistir as mensagens.
+
+- função para deletar as mensagens do banco de dados adicionada.
+
+- Página do chat só pode ser acessada após inserir usuário valido do github.
+
+- Só o usuário que postou a mensagem pode apaga-la.
+
+- Não tive sucesso tentando implementar sozinho o realtime, quase chutei o balde e troquei pra firebase v9. kkk - cada k é uma lágrima -
+
+# Ansioso para a finalização amanhã.
+
+![imersao-alura-04](https://user-images.githubusercontent.com/75024157/151420584-05dbfb9c-4925-44b7-b68e-fdfaee32247f.PNG)

@@ -87,8 +87,7 @@ const HomeSty = styled.main`
   }
 `;
 
-function Home() {
-  const [user, setUser] = useState("");
+function Home({ user, setUser }) {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
   const [error, setError] = useState("");

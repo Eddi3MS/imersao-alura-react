@@ -1,5 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { BiTrash } from "react-icons/bi";
 import styled from "styled-components";
 
@@ -62,24 +61,6 @@ const ChatListSty = styled.div`
   }
 `;
 
-const container = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-const child = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-  },
-};
-
 function ChatList({ messageList, onDelete, user }) {
   const messagesEndRef = useRef(null);
 
@@ -93,7 +74,7 @@ function ChatList({ messageList, onDelete, user }) {
 
   return (
     <ChatListSty>
-      <motion.div
+      <div
         style={{
           display: "flex",
           flexDirection: "column",
@@ -101,45 +82,36 @@ function ChatList({ messageList, onDelete, user }) {
           justifyContent: "flex-end",
           minHeight: "67vh",
         }}
-        variants={container}
-        initial="hidden"
-        animate="visible"
       >
-        <AnimatePresence>
-          {messageList.map((message) => {
-            return (
-              <motion.div
-                variants={child}
-                className="chat__container-singlePost"
-                key={message.id}
-              >
-                <div>
-                  <img
-                    width="20"
-                    height="20"
-                    src={`https://github.com/${message.from}.png`}
-                    alt="user"
-                    onClick={() => {}}
-                  />
+        {messageList.map((message) => {
+          return (
+            <div className="chat__container-singlePost" key={message.id}>
+              <div>
+                <img
+                  width="20"
+                  height="20"
+                  src={`https://github.com/${message.from}.png`}
+                  alt="user"
+                  onClick={() => {}}
+                />
 
-                  <span>{message.from}</span>
-                  <span>{message.date}</span>
-                  {message.from === user ? (
-                    <button
-                      aria-label="delete message"
-                      className="btn__trash"
-                      onClick={(e) => onDelete(e, message.id)}
-                    >
-                      <BiTrash />
-                    </button>
-                  ) : null}
-                </div>
-                <p>{message.message}</p>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
-      </motion.div>
+                <span>{message.from}</span>
+                <span>{message.date}</span>
+                {message.from === user ? (
+                  <button
+                    aria-label="delete message"
+                    className="btn__trash"
+                    onClick={(e) => onDelete(e, message.id)}
+                  >
+                    <BiTrash />
+                  </button>
+                ) : null}
+              </div>
+              <p>{message.message}</p>
+            </div>
+          );
+        })}
+      </div>
 
       <div ref={messagesEndRef} />
     </ChatListSty>

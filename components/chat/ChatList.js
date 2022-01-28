@@ -57,6 +57,10 @@ const ChatListSty = styled.div`
     .chat__sticker {
       width: 150px;
     }
+
+    p {
+      word-break: break-word;
+    }
   }
 
   .chat__container-singlePost + .chat__container-singlePost {

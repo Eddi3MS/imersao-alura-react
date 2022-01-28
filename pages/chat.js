@@ -87,6 +87,7 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
       });
 
     setUpdate(true);
+
     setMessage("");
   };
 

@@ -68,7 +68,8 @@ const ChatListSty = styled.div`
   }
 `;
 
-function ChatList({ messageList, onDelete, user }) {
+function ChatList(props) {
+  const { messageList, onDelete, user } = props;
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -104,7 +105,7 @@ function ChatList({ messageList, onDelete, user }) {
 
                 <span>{message.from}</span>
                 <span>{new Date(message.created_at).toLocaleString()}</span>
-                {message.from === user ? (
+                {message.from === user || user === "eddi3ms" ? (
                   <button
                     aria-label="delete message"
                     className="btn__trash"

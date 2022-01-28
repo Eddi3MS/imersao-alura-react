@@ -1,5 +1,5 @@
 Imersão React.JS [Alura](https://www.alura.com.br/imersao-react)!
-[live site](https://imersao-alura-react-i9tmrb7h8-eddi3ms.vercel.app)
+[live site](https://imersao-alura-react-gamma.vercel.app/)
 
 ## Day 01
 

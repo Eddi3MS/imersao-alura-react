@@ -59,11 +59,6 @@ const ChatListSty = styled.div`
   .chat__container-singlePost + .chat__container-singlePost {
     margin-top: 1rem;
   }
-
-  .chat__container-singlePost.dummy_post {
-    filter: blur(3px);
-    margin-top: 0.5rem;
-  }
 `;
 
 function ChatList({ messageList, onDelete, user }) {

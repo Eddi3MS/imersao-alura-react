@@ -54,6 +54,9 @@ const ChatListSty = styled.div`
         }
       }
     }
+    .chat__sticker {
+      width: 100px;
+    }
   }
 
   .chat__container-singlePost + .chat__container-singlePost {
@@ -101,13 +104,21 @@ function ChatList({ messageList, onDelete, user }) {
                   <button
                     aria-label="delete message"
                     className="btn__trash"
-                    onClick={(e) => onDelete(e, message.id)}
+                    onClick={() => onDelete(message.id)}
                   >
                     <BiTrash />
                   </button>
                 ) : null}
               </div>
-              <p>{message.message}</p>
+              {message.message.startsWith(":sticker:") ? (
+                <img
+                  className="chat__sticker"
+                  src={message.message.replace(":sticker:", "")}
+                  alt="sticker"
+                />
+              ) : (
+                <p>{message.message}</p>
+              )}
             </div>
           );
         })}

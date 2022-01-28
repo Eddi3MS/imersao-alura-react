@@ -43,9 +43,6 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const router = useRouter();
-
-  const [update, setUpdate] = useState(true);
-
   const supabase_client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   useEffect(() => {
@@ -54,52 +51,61 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
     }
   });
 
-  useEffect(() => {
-    if (!update) return;
+  function listeningChanges(response) {
+    return supabase_client
+      .from("messages")
+      .on("INSERT", (responseLive) => {
+        response(responseLive);
+      })
+      .on("DELETE", (responseLive) => {
+        response(responseLive.old.id);
+      })
+      .subscribe();
+  }
 
+  function isntDel(value, id) {
+    return value.id !== id;
+  }
+
+  useEffect(() => {
     supabase_client
       .from("messages")
       .select("*")
       .then(({ data }) => {
         setMessageList(data);
-        setUpdate(false);
       });
-  }, [update]);
+    const subscribe = listeningChanges((response) => {
+      if (response.eventType === "INSERT") {
+        setMessageList((currentValue) => {
+          return [...currentValue, response.new];
+        });
+      } else {
+        setMessageList((currentValue) =>
+          currentValue.filter((value) => value.id !== response)
+        );
+      }
+    });
+    return () => subscribe.unsubscribe();
+  }, []);
 
-  const handleTextSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!message) {
-      toast.error("Insira uma mensagem.");
-      return;
-    }
-
+  const handleTextSubmit = (message) => {
+    if (!message) return toast.error("Insira uma mensagem.");
     const messageEdit = {
       message,
       from: user,
     };
-
     supabase_client
       .from("messages")
       .insert([messageEdit])
-      .then(({ data }) => {
-        setMessageList([...messageList, data[0]]);
-      });
-
-    setUpdate(true);
-
+      .then(({ data }) => {});
     setMessage("");
   };
 
-  const handleDeleteMessage = async (e, messageId) => {
-    e.preventDefault();
-
+  const handleDelete = async (messageId) => {
     const { data, error } = await supabase_client
       .from("messages")
       .delete()
       .match({ id: messageId });
-
-    setUpdate(true);
   };
 
   return (
@@ -109,11 +115,7 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
         <Link href="/">Logout</Link>
       </header>
 
-      <ChatList
-        user={user}
-        onDelete={handleDeleteMessage}
-        messageList={messageList}
-      />
+      <ChatList user={user} onDelete={handleDelete} messageList={messageList} />
 
       <ChatInput
         handleSubmit={handleTextSubmit}

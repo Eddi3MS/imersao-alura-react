@@ -150,12 +150,10 @@ function Home({ user, setUser }) {
         <div className="container__image">
           {error && <span>{error}</span>}
 
-          {name && (
-            <>
-              <img width="200" height="200" src={avatar} alt="github user" />
-              <span>{name}</span>
-            </>
+          {avatar && (
+            <img width="200" height="200" src={avatar} alt="github user" />
           )}
+          {name && <span>{name}</span>}
         </div>
       </div>
     </HomeSty>

@@ -1,5 +1,4 @@
 import React from "react";
-import { BiMicrophone } from "react-icons/bi";
 import styled from "styled-components";
 import ButtonStickers from "./ButtonSticker";
 
@@ -7,9 +6,11 @@ const FormSty = styled.div`
   margin-block: 1.43rem 2rem;
   width: calc(100% - 2rem);
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
   input {
-    flex: 1;
+    flex: 2;
     height: 2.75rem;
     border-radius: 4px;
     background-color: var(--neutrals-800);
@@ -30,24 +31,18 @@ const FormSty = styled.div`
     cursor: pointer;
   }
 
-  button.btn__emotes {
-    display: none;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-
-    svg {
-      font-size: 2rem;
-      color: var(--primary-500);
-    }
-  }
-
   button.btn__submit {
     height: 2.75rem;
     background-color: var(--primary-500);
     color: var(--neutrals-100);
     border-radius: 4px;
     padding: 0.4rem 0.8rem;
+    flex: 1;
+    max-width: 120px;
+
+    &:hover {
+      background-color: var(--primary-400);
+    }
   }
 `;
 
@@ -67,14 +62,6 @@ function ChatInput({ handleSubmit, setMessage, message }) {
             }
           }}
         />
-        <ButtonStickers
-          aria-label="stickers"
-          type="submit"
-          onStickerClick={(sticker) => {
-            handleSubmit(`:sticker:${sticker}`);
-          }}
-        />
-
         <button
           className="btn__submit"
           onClick={() => handleSubmit(message)}
@@ -83,6 +70,13 @@ function ChatInput({ handleSubmit, setMessage, message }) {
         >
           Enviar
         </button>
+        <ButtonStickers
+          aria-label="stickers"
+          type="submit"
+          onStickerClick={(sticker) => {
+            handleSubmit(`:sticker:${sticker}`);
+          }}
+        />
       </FormSty>
     </>
   );

@@ -25,7 +25,7 @@ body {
 html,
 body,
 #__next {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex: 1;
 }

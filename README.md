@@ -43,3 +43,13 @@ Construção da tela de entrada.
 # Ansioso para a finalização amanhã.
 
 ![imersao-alura-04](https://user-images.githubusercontent.com/75024157/151420584-05dbfb9c-4925-44b7-b68e-fdfaee32247f.PNG)
+
+## Day 05 Concluído !!
+
+- Realtime implementado, agora o chat atualiza sempre que há remoção ou envio de mensagens.
+
+- alguns stickers adicionados.
+
+- Aprendi vários detalhes durante a implementação. Muito bom!!
+
+![imersao-alura-05](https://user-images.githubusercontent.com/75024157/151602576-0907af42-abe3-41a8-b651-ac8bd33a96e0.PNG)

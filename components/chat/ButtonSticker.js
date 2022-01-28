@@ -6,10 +6,10 @@ const ButtonStickerSty = styled.div`
   position: relative;
 
   button {
-    border-radius: 50%;
     padding: 0 3px 0 0;
-    min-width: 50px;
-    min-height: 50px;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 4px;
     font-size: 20px;
     margin-bottom: 8px;
     line-height: 0;
@@ -18,7 +18,7 @@ const ButtonStickerSty = styled.div`
     justify-content: center;
     background-color: var(--neutrals-300);
     &:hover {
-      filter: grayscale(0);
+      background-color: var(--neutrals-200);
     }
   }
   .sticker__container {

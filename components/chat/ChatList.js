@@ -118,10 +118,10 @@ function ChatList(props) {
                   </button>
                 ) : null}
               </div>
-              {message.message.startsWith(":sticker:") ? (
+              {message.message.startsWith(":figurinha:") ? (
                 <img
                   className="chat__sticker"
-                  src={message.message.replace(":sticker:", "")}
+                  src={message.message.replace(":figurinha:", "")}
                   alt="sticker"
                 />
               ) : (

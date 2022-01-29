@@ -74,7 +74,7 @@ function ChatInput({ handleSubmit, setMessage, message }) {
           aria-label="stickers"
           type="submit"
           onStickerClick={(sticker) => {
-            handleSubmit(`:sticker:${sticker}`);
+            handleSubmit(`:figurinha:${sticker}`);
           }}
         />
       </FormSty>

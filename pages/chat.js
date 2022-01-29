@@ -18,6 +18,10 @@ const ChatSty = styled.main`
   margin: 3.875rem 2.5rem;
   border-radius: 5px;
 
+  @media (max-width: 450px) {
+    margin: 10px;
+  }
+
   overflow: hidden;
 
   header {
@@ -61,10 +65,6 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
         response(responseLive.old.id);
       })
       .subscribe();
-  }
-
-  function isntDel(value, id) {
-    return value.id !== id;
   }
 
   useEffect(() => {
@@ -111,7 +111,7 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
   return (
     <ChatSty>
       <header>
-        <h1>Chat</h1>
+        <h1>Bem-vindo {user}</h1>
         <Link href="/">Logout</Link>
       </header>
 

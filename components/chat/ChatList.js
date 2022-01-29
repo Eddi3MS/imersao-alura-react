@@ -77,7 +77,10 @@ function ChatList(props) {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    let rollToBottom = setTimeout(() => scrollToBottom(), 400);
+    return () => {
+      clearTimeout(rollToBottom);
+    };    
   }, [messageList]);
 
   return (
@@ -105,7 +108,7 @@ function ChatList(props) {
 
                 <span>{message.from}</span>
                 <span>{new Date(message.created_at).toLocaleString()}</span>
-                {message.from === user || user === "eddi3ms" ? (
+                {message.from === user || user == "Eddi3MS" ? (
                   <button
                     aria-label="delete message"
                     className="btn__trash"

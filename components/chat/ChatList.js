@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiTrash } from "react-icons/bi";
 import styled from "styled-components";
 
@@ -10,10 +10,41 @@ const ChatListSty = styled.div`
   width: calc(100% - 2rem);
   border-radius: 4px;
   padding: 1rem 1.3rem;
-  color: var(--neutrals-000);
+  color: var(--neutrals-100);
   font-size: 1rem;
 
   overflow-y: scroll;
+
+  .chatList__scrollCheckbox {
+    position: absolute;
+    bottom: 5px;
+    left: 1rem;
+    display: flex;
+    align-items: baseline;
+
+    input {
+      display: none;
+    }
+    label {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      margin-right: 0.4rem;
+      border: 1px solid var(--primary-600);
+      transition: background-color 0.2s ease-in-out;
+      cursor: pointer;
+
+      &.scroll_true {
+        background-color: var(--primary-500);
+      }
+    }
+    span {
+      font-size: 0.975rem;
+      color: var(--neutrals-400);
+      font-weight: 500;
+    }
+  }
 
   ::-webkit-scrollbar {
     width: 8px;
@@ -29,7 +60,7 @@ const ChatListSty = styled.div`
   .chat__container-singlePost {
     div {
       display: flex;
-      gap: 0.5rem;
+      gap: 0.2rem;
       margin-bottom: 0.5rem;
       img {
         width: 20px;
@@ -37,10 +68,15 @@ const ChatListSty = styled.div`
         border-radius: 50%;
       }
 
-      span:nth-of-type(2) {
-        font-size: 10px;
+      .chat__container-singlePost-user {
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+      .chat__container-singlePost-date {
+        font-size: 12px;
         align-self: center;
         color: var(--neutrals-300);
+        margin-inline: 1rem;
       }
 
       .btn__trash {
@@ -50,7 +86,7 @@ const ChatListSty = styled.div`
 
         svg {
           font-size: 1.2rem;
-          color: red;
+          color: #c73434;
         }
       }
     }
@@ -68,8 +104,8 @@ const ChatListSty = styled.div`
   }
 `;
 
-function ChatList(props) {
-  const { messageList, onDelete, user } = props;
+function ChatList({ messageList, onDelete, user }) {
+  const [scroll, setScroll] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -77,14 +113,30 @@ function ChatList(props) {
   };
 
   useEffect(() => {
+    if (!scroll) return;
     let rollToBottom = setTimeout(() => scrollToBottom(), 400);
     return () => {
       clearTimeout(rollToBottom);
-    };    
-  }, [messageList]);
+    };
+  }, [messageList, scroll]);
 
   return (
     <ChatListSty>
+      <div className="chatList__scrollCheckbox">
+        <label
+          htmlFor="scroll"
+          className={scroll ? "scroll_true" : null}
+        ></label>
+        <input
+          type="checkbox"
+          value={scroll}
+          name=""
+          id="scroll"
+          onClick={() => setScroll(!scroll)}
+          onChange={console.log(scroll)}
+        />
+        <span>Scroll automático</span>
+      </div>
       <div
         style={{
           display: "flex",
@@ -106,8 +158,12 @@ function ChatList(props) {
                   onClick={() => {}}
                 />
 
-                <span>{message.from}</span>
-                <span>{new Date(message.created_at).toLocaleString()}</span>
+                <span className="chat__container-singlePost-user">
+                  {message.from}
+                </span>
+                <span className="chat__container-singlePost-date">
+                  {new Date(message.created_at).toLocaleString()}
+                </span>
                 {message.from === user || user == "Eddi3MS" ? (
                   <button
                     aria-label="delete message"

@@ -1,5 +1,8 @@
 import { createGlobalStyle } from "styled-components";
 import "@fontsource/roboto";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import "@fontsource/roboto/900.css";
 
 const GlobalStyles = createGlobalStyle`
 /* Box sizing rules ** Remove default margin */
@@ -79,6 +82,8 @@ picture {
     background-repeat: no-repeat;
     background-size: cover;
     font-family: 'Roboto', Helvetica, Sans-Serif;
+    font-weight: 500;
+
   }
 `;
 

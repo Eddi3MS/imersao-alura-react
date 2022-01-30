@@ -71,9 +71,9 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
     supabase_client
       .from("messages")
       .select("*")
-      .then(({ data }) => {
-        setMessageList(data);
-      });
+      .order('id', {ascending: true})
+      .then(({ data }) => setMessageList(data));
+
     const subscribe = listeningChanges((response) => {
       if (response.eventType === "INSERT") {
         setMessageList((currentValue) => {

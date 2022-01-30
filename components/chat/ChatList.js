@@ -105,7 +105,7 @@ const ChatListSty = styled.div`
 `;
 
 function ChatList({ messageList, onDelete, user }) {
-  const [scroll, setScroll] = useState(false);
+  const [scroll, setScroll] = useState(true);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -133,7 +133,6 @@ function ChatList({ messageList, onDelete, user }) {
           name=""
           id="scroll"
           onClick={() => setScroll(!scroll)}
-          onChange={console.log(scroll)}
         />
         <span>Scroll automático</span>
       </div>

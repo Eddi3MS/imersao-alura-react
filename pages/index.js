@@ -97,18 +97,24 @@ function Home({ user, setUser }) {
   useEffect(() => {
     if (user === "") return;
 
-    const url = `https://api.github.com/users/${user}`;
+    const identifier = setTimeout(() => {
+      const url = `https://api.github.com/users/${user}`;
 
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.message) {
-          setError(data.message);
-        } else {
-          setError("");
-          setData(data);
-        }
-      });
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.message) {
+            setError(data.message);
+          } else {
+            setError("");
+            setData(data);
+          }
+        });
+    }, 700);
+
+    return () => {
+      clearTimeout(identifier);
+    };
   }, [user]);
 
   const setData = ({ name, avatar_url }) => {

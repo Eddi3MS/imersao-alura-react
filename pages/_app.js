@@ -1,11 +1,10 @@
 import Head from "next/head";
-import { useState } from "react";
 import { Toaster } from "react-hot-toast";
+import { UserContextProvider } from "../store/UserContext";
+
 import GlobalStyles from "../styles/GlobalStyles";
 
 function MyApp({ Component, pageProps }) {
-  const [user, setUser] = useState("");
-
   return (
     <>
       <Head>
@@ -16,7 +15,9 @@ function MyApp({ Component, pageProps }) {
         />
       </Head>
       <GlobalStyles />
-      <Component {...pageProps} user={user} setUser={setUser} />
+      <UserContextProvider>
+        <Component {...pageProps} />
+      </UserContextProvider>
       <Toaster
         toastOptions={{
           style: { fontSize: "1.4rem" },

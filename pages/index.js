@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import UserContext from "../store/UserContext";
 
 const HomeSty = styled.main`
   display: flex;
@@ -87,54 +88,15 @@ const HomeSty = styled.main`
   }
 `;
 
-function Home({ user, setUser }) {
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [error, setError] = useState("");
-
+function Home() {
   const router = useRouter();
-
-  useEffect(() => {
-    if (user === "") return;
-
-    const identifier = setTimeout(() => {
-      const url = `https://api.github.com/users/${user}`;
-
-      fetch(url)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.message) {
-            setError(data.message);
-          } else {
-            setError("");
-            setData(data);
-          }
-        });
-    }, 700);
-
-    return () => {
-      clearTimeout(identifier);
-    };
-  }, [user]);
-
-  const setData = ({ name, avatar_url }) => {
-    setName(name);
-    setAvatar(avatar_url);
-  };
+  const ctx = useContext(UserContext);
+  const { user, setUser, error, info } = ctx;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (error) {
-      toast.error("Usuário inválido.");
-      return;
-    }
-
-    if (user.length < 1) {
-      toast.error("Usuário inválido.");
-      return;
-    }
-
+    if (error) return toast.error("Usuário inválido.");
+    if (user.length < 1) return toast.error("Usuário inválido.");
     router.push("/chat");
   };
 
@@ -156,10 +118,10 @@ function Home({ user, setUser }) {
         <div className="container__image">
           {error && <span>{error}</span>}
 
-          {avatar && (
-            <img width="200" height="200" src={avatar} alt="github user" />
+          {info.avatar && (
+            <img width="200" height="200" src={info.avatar} alt="github user" />
           )}
-          {name && <span>{name}</span>}
+          {info.name && <span>{info.name}</span>}
         </div>
       </div>
     </HomeSty>

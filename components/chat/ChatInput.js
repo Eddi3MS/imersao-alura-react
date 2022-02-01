@@ -57,7 +57,6 @@ function ChatInput({ handleSubmit, setMessage, message }) {
           onChange={(e) => setMessage(e.target.value)}
           onKeyPress={(event) => {
             if (event.key === "Enter") {
-              event.preventDefault();
               handleSubmit(message);
             }
           }}

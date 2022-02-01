@@ -1,11 +1,12 @@
 import toast from "react-hot-toast";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
 import ChatList from "../components/chat/ChatList";
 import ChatInput from "../components/chat/ChatInput";
+import UserContext from "../store/UserContext";
 
 const ChatSty = styled.main`
   display: flex;
@@ -32,22 +33,35 @@ const ChatSty = styled.main`
     justify-content: space-between;
     align-items: center;
 
-    h1,
-    a {
+    h1 {
       font-size: 0.875rem;
       color: var(--neutrals-200);
     }
-    a {
-      text-decoration: none;
+    .logoutBtn {
+      padding: 0.3rem;
+      border: 0;
+      border-radius: 3px;
+      background-color: var(--neutrals-200);
+      color: var(--neutrals-700);
+      font-weight: 500;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--neutrals-100);
+      }
     }
   }
 `;
 
-function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
+function Chat({ SUPABASE_ANON_KEY, SUPABASE_URL }) {
   const [message, setMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   const router = useRouter();
   const supabase_client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const ctx = useContext(UserContext);
+
+  const { user, info, setUser, setInfo } = ctx;
 
   useEffect(() => {
     if (!user) {
@@ -71,7 +85,7 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
     supabase_client
       .from("messages")
       .select("*")
-      .order('id', {ascending: true})
+      .order("id", { ascending: true })
       .then(({ data }) => setMessageList(data));
 
     const subscribe = listeningChanges((response) => {
@@ -97,22 +111,31 @@ function Chat({ user, SUPABASE_ANON_KEY, SUPABASE_URL }) {
     supabase_client
       .from("messages")
       .insert([messageEdit])
-      .then(({ data }) => {});
+      .then(() => {});
     setMessage("");
   };
 
   const handleDelete = async (messageId) => {
-    const { data, error } = await supabase_client
-      .from("messages")
-      .delete()
-      .match({ id: messageId });
+    await supabase_client.from("messages").delete().match({ id: messageId });
+  };
+
+  const handleLogout = () => {
+    setUser("");
+    setInfo({});
+    router.push("/");
   };
 
   return (
     <ChatSty>
       <header>
-        <h1>Bem-vindo {user}</h1>
-        <Link href="/">Logout</Link>
+        <h1>Bem-vindo, {info.name}.</h1>
+        <button
+          aria-label="logout from app"
+          onClick={handleLogout}
+          className="logoutBtn"
+        >
+          Logout
+        </button>
       </header>
 
       <ChatList user={user} onDelete={handleDelete} messageList={messageList} />

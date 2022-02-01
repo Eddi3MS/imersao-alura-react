@@ -123,10 +123,7 @@ function ChatList({ messageList, onDelete, user }) {
   return (
     <ChatListSty>
       <div className="chatList__scrollCheckbox">
-        <label
-          htmlFor="scroll"
-          className={scroll ? "scroll_true" : null}
-        ></label>
+        <label htmlFor="scroll" className={scroll ? "scroll_true" : null} />
         <input
           type="checkbox"
           value={scroll}

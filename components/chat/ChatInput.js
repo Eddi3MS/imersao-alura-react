@@ -9,6 +9,12 @@ const FormSty = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
+
+  @media (max-width: 450px) {
+    margin-block: 1rem 2rem;
+    gap: 5px;
+  }
+
   input {
     flex: 2;
     height: 2.75rem;

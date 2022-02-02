@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-import Link from "next/link";
 import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { createClient } from "@supabase/supabase-js";
@@ -14,13 +13,18 @@ const ChatSty = styled.main`
   align-items: center;
   justify-content: center;
   backdrop-filter: blur(2px);
+  max-width: 1280px;
 
   background-color: var(--neutrals-700);
-  margin: 3.875rem 2.5rem;
+  margin: 2rem auto;
   border-radius: 5px;
 
+  @media (max-width: 1280px) {
+    margin: 1rem;
+  }
+
   @media (max-width: 450px) {
-    margin: 10px;
+    margin: 6px;
   }
 
   overflow: hidden;
